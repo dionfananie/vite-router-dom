@@ -13,7 +13,10 @@ type contextData = {
 function PrivateLayout() {
   const { user } = useOutletContext<contextData>();
   const location = useLocation();
-  console.log(user);
+  console.log("context from app layoutL: ", user);
+
+  // intended new data append to local context only in private layout
+  const auth = { isAuth: true };
 
   if (!user) {
     // Redirect them to the /login page, but save the current location they were
@@ -23,7 +26,7 @@ function PrivateLayout() {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 
-  return <Outlet />;
+  return <Outlet context={{ auth, user }} />;
 }
 
 export default PrivateLayout;
